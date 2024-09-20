@@ -1,0 +1,39 @@
+- defaultTab: nodes
+  description: |-
+    Job that calls an ansible playbook inline within the task itself
+    without having to have an external playbook file.
+  executionEnabled: true
+  id: 295757c2-f6b8-41e1-900e-7830fe3852ee
+  loglevel: INFO
+  name: ansible-playbook-inline-job
+  nodeFilterEditable: true
+  nodefilters:
+    dispatch:
+      excludePrecedence: true
+      keepgoing: true
+      rankOrder: ascending
+      successOnEmptyNodeFilter: true
+      threadcount: '1'
+    filter: .*
+  nodesSelectedByDefault: false
+  plugins:
+    ExecutionLifecycle: {}
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - configuration:
+        ansible-become: 'false'
+        ansible-encrypt-extra-vars: 'false'
+        ansible-extra-vars: 'ansible_debug_test: "test variable in extra vars"'
+        ansible-playbook-inline: "---\n- name: test playbook\n  hosts: all\n  become:\
+          \ true\n  gather_facts: true\n  tasks:\n  \n  - name: test debug task\n\
+          \    debug:\n      msg: \"testing debug task message\"\n\n  - name: test\
+          \ debug task with variable\n    debug:\n      var: ansible_debug_test\n"
+        ansible-ssh-passphrase-option: option.password
+        ansible-ssh-use-agent: 'false'
+      nodeStep: true
+      type: com.batix.rundeck.plugins.AnsiblePlaybookInlineWorkflowNodeStep
+    keepgoing: true
+    strategy: node-first
+  uuid: 295757c2-f6b8-41e1-900e-7830fe3852ee
+

@@ -1,0 +1,42 @@
+- defaultTab: nodes
+  description: |-
+    Job that calls an external ansible-playbook file.
+    must call the complete path to the playbook file.
+  excludeFilterUncheck: true
+  executionEnabled: true
+  id: 6a50af1f-667c-45bd-8d9d-ef4a29e061df
+  loglevel: INFO
+  name: ansible-playbook-job
+  nodeFilterEditable: true
+  nodefilters:
+    dispatch:
+      excludePrecedence: true
+      keepgoing: true
+      rankOrder: ascending
+      successOnEmptyNodeFilter: true
+      threadcount: '1'
+    filter: .*
+    filterExclude: localhost
+  nodesSelectedByDefault: true
+  plugins:
+    ExecutionLifecycle: {}
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - nodeStep: false
+      type: source-refresh-plugin
+    - configuration:
+        ansible-become: 'true'
+        ansible-encrypt-extra-vars: 'false'
+        ansible-playbook: /var/lib/rundeck/playbooks/test-playbook.yml
+        ansible-ssh-auth-type: privateKey
+        ansible-ssh-key-storage-path: keys/project/ansible-test/ansible-pem
+        ansible-ssh-passphrase-option: option.password
+        ansible-ssh-use-agent: 'false'
+        ansible-ssh-user: ansible
+      nodeStep: true
+      type: com.batix.rundeck.plugins.AnsiblePlaybookWorflowNodeStep
+    keepgoing: true
+    strategy: node-first
+  uuid: 6a50af1f-667c-45bd-8d9d-ef4a29e061df
+

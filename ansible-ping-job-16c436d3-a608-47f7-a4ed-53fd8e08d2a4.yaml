@@ -1,0 +1,82 @@
+- defaultTab: output
+  description: ansible ad-hoc module call
+  executionEnabled: true
+  id: 16c436d3-a608-47f7-a4ed-53fd8e08d2a4
+  loglevel: DEBUG
+  name: ansible-ping-job
+  nodeFilterEditable: false
+  nodefilters:
+    dispatch:
+      excludePrecedence: true
+      keepgoing: true
+      rankOrder: descending
+      successOnEmptyNodeFilter: true
+      threadcount: '1'
+    filter: .*
+  nodesSelectedByDefault: true
+  plugins:
+    ExecutionLifecycle: {}
+  schedule:
+    month: '*'
+    time:
+      hour: 0/1
+      minute: '0'
+      seconds: '0'
+    weekday:
+      day: '*'
+    year: '*'
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - nodeStep: false
+      type: source-refresh-plugin
+    - configuration:
+        ansible-become: 'false'
+        ansible-inventory-inline: |-
+          [linux]
+          client-01 ansible_host=172.22.0.101
+          client-02 ansible_host=172.22.0.102
+          client-03 ansible_host=172.22.0.103
+          client-04 ansible_host=172.22.0.100
+
+          [linux:vars]
+          ansible_user=ansible
+        ansible-module: ping
+        ansible-ssh-auth-type: privateKey
+        ansible-ssh-key-storage-path: keys/project/ansible-test/ansible-pem
+        ansible-ssh-passphrase-option: option.password
+        ansible-ssh-use-agent: 'false'
+        ansible-ssh-user: ansible
+      nodeStep: false
+      type: com.batix.rundeck.plugins.AnsibleModuleWorkflowStep
+    keepgoing: true
+    pluginConfig:
+      LogFilter:
+      - config:
+          color: red
+          replacement: '[SECURE]'
+        type: mask-passwords
+      - config:
+          fgcolor: yellow
+          mode: bold
+          regex: changed
+        type: highlight-output
+      - config:
+          fgcolor: blue
+          mode: bold
+          regex: ok
+        type: highlight-output
+      - config:
+          fgcolor: red
+          mode: bold
+          regex: pong
+        type: highlight-output
+      - config:
+          maskOnlyValue: 'true'
+          regex: '(PreferredAuthentications=)(gssapi-with-mic,gssapi-keyex,hostbased,publickey)'
+          replacement: '[AUTH_MASKED]'
+        type: mask-log-output-regex
+    strategy: node-first
+  timeZone: Etc/UTC
+  uuid: 16c436d3-a608-47f7-a4ed-53fd8e08d2a4
+
