@@ -49,7 +49,7 @@
           replacement: '[SECURE]'
         type: mask-passwords
       - config:
-          fgcolor: yellow
+          fgcolor: green
           mode: bold
           regex: changed
         type: highlight-output
