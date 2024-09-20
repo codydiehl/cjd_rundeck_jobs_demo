@@ -25,10 +25,21 @@
         ansible-become: 'false'
         ansible-encrypt-extra-vars: 'false'
         ansible-extra-vars: 'ansible_debug_test: "test variable in extra vars"'
-        ansible-playbook-inline: "---\n- name: test playbook\n  hosts: all\n  become:\
-          \ true\n  gather_facts: true\n  tasks:\n  \n  - name: test debug task\n\
-          \    debug:\n      msg: \"testing debug task message\"\n\n  - name: test\
-          \ debug task with variable\n    debug:\n      var: ansible_debug_test\n"
+        ansible-playbook-inline: |
+          ---
+          - name: test playbook
+            hosts: all
+            become: true
+            gather_facts: true
+            tasks:
+            
+            - name: test debug task
+              debug:
+                msg: "testing debug task message"
+                
+            - name: test debug task with variable
+              debug:
+                var: ansible_debug_test
         ansible-ssh-passphrase-option: option.password
         ansible-ssh-use-agent: 'false'
       nodeStep: true
