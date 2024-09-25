@@ -3,7 +3,7 @@
   executionEnabled: true
   id: 16c436d3-a608-47f7-a4ed-53fd8e08d2a4
   loglevel: DEBUG
-  name: ansible-ping-job
+  name: ansible-ping-job-1
   nodeFilterEditable: false
   nodefilters:
     dispatch:
