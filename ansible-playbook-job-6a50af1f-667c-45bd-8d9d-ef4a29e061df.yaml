@@ -2,6 +2,7 @@
   description: |-
     Job that calls an external ansible-playbook file.
     must call the complete path to the playbook file.
+    Make sure the playbook exists on the rundeck node.
   excludeFilterUncheck: true
   executionEnabled: true
   id: 6a50af1f-667c-45bd-8d9d-ef4a29e061df
