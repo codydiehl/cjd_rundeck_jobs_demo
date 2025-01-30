@@ -2,7 +2,7 @@
   description: ansible ad-hoc module call
   executionEnabled: true
   id: 16c436d3-a608-47f7-a4ed-53fd8e08d2a4
-  loglevel: DEBUG
+  loglevel: INFO
   name: ansible-ping-job-1
   nodeFilterEditable: false
   nodefilters:
@@ -15,7 +15,7 @@
     filter: .*
   nodesSelectedByDefault: true
   plugins:
-    ExecutionLifecycle: {}
+    ExecutionLifecycle: null
   schedule:
     month: '*'
     time:
@@ -28,17 +28,15 @@
   scheduleEnabled: true
   sequence:
     commands:
-    - nodeStep: false
-      type: source-refresh-plugin
     - configuration:
         ansible-become: 'false'
-        ansible-inventory-inline:
         ansible-module: ping
-        ansible-ssh-auth-type: privateKey
-        ansible-ssh-key-storage-path: keys/project/ansible-test/ansible-pem
+        ansible-ssh-auth-type: password
+        ansible-ssh-password-storage-path: keys/project/ansible-test/testuser-ssh-pass
         ansible-ssh-passphrase-option: option.password
         ansible-ssh-use-agent: 'false'
-        ansible-ssh-user: ansible
+        ansible-ssh-user: testuser
+      description: Ansible Ping
       nodeStep: false
       type: com.batix.rundeck.plugins.AnsibleModuleWorkflowStep
     keepgoing: true
@@ -71,4 +69,3 @@
     strategy: node-first
   timeZone: Etc/UTC
   uuid: 16c436d3-a608-47f7-a4ed-53fd8e08d2a4
-
